@@ -8,35 +8,32 @@
 
 import UIKit
 
-public enum TKSWBackgroundType {
+@objc public enum TKSWBackgroundType: Int {
     case blur
     case brightBlur
-    case transparentBlack(alpha: CGFloat)
+    case transparentBlack
 }
 
 
 
 class TKSWBackgroundView: UIView {
     
-    
     let transparentBlackView = UIView()
     var brightView: BrightView?
-    
     var blurView: UIVisualEffectView?
-    
     
     var blackAlphaForBlur:CGFloat = 0.125
     var blurDuration: TimeInterval = 0.2
     let type: TKSWBackgroundType
-    
-    init(frame:CGRect, type: TKSWBackgroundType) {
+
+    init(frame: CGRect, type: TKSWBackgroundType, alpha: CGFloat = 0) {
         self.type = type
+        self.blackAlphaForBlur = alpha
         super.init(frame:frame)
         self.isHidden = true
         
         transparentBlackView.frame = frame
         transparentBlackView.backgroundColor = UIColor.black
-        transparentBlackView.alpha = 0
         self.addSubview(transparentBlackView)
         
         switch type {
@@ -50,10 +47,14 @@ class TKSWBackgroundView: UIView {
             break
         }
     }
+    
+    convenience init(frame: CGRect, type: TKSWBackgroundType) {
+        self.init(frame: frame, type: type, alpha: 0.5)
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     func show(duration:TimeInterval = 0.2, didEnd:(()->Void)? = nil) {
         if duration != 0.2 {
@@ -64,8 +65,9 @@ class TKSWBackgroundView: UIView {
             showBlur(didEnd)
         case .brightBlur:
             showBrightBlur(didEnd)
-        case let .transparentBlack(alpha):
-            self.blackAlphaForBlur = alpha
+        case .transparentBlack:
+            self.transparentBlackView.alpha = 0
+//            self.blackAlphaForBlur = 1
             showTransparentBlack(didEnd)
         }
     }

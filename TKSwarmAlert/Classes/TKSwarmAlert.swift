@@ -10,7 +10,7 @@ import UIKit
 
 public typealias Closure=()->Void
 
-open class TKSwarmAlert: NSObject {
+@objc open class TKSwarmAlert: NSObject {
     
     open var durationOfPreventingTapBackgroundArea: TimeInterval = 0
     open var didDissmissAllViews: Closure?
@@ -23,6 +23,7 @@ open class TKSwarmAlert: NSObject {
     
     var type: TKSWBackgroundType!
     
+    @objc(initWithBackgroundType:)
     public init(backgroundType: TKSWBackgroundType = .blur) {
         super.init()
         self.type = backgroundType

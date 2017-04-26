@@ -15,7 +15,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        makeSampleBackGround()
+//        makeSampleBackGround()
         
         let showButton = UIButton()
         showButton.backgroundColor = UIColor(red:0.976471, green: 0.635294, blue: 0.168627, alpha: 1)
@@ -39,6 +39,7 @@ class ViewController: UIViewController {
     }
     
     func onTapShowButton() {
+        NSLog("Button pressed")
         self.showAlert()
     }
  
