@@ -14,6 +14,7 @@ public typealias Closure=()->Void
     
     open var durationOfPreventingTapBackgroundArea: TimeInterval = 0
     open var didDissmissAllViews: Closure?
+    open var visible: Bool = false
     
     open var fadeOutDuration: TimeInterval = 0.2
     
@@ -43,6 +44,13 @@ public typealias Closure=()->Void
     }
     
     open func show(_ views:[UIView]) {
+        if (self.visible) {
+            self.addNextViews(views)
+            return
+        }
+        
+        self.visible = true
+        
         let window:UIWindow? = UIApplication.shared.keyWindow
         if window != nil {
             let frame:CGRect = window!.bounds
@@ -68,6 +76,7 @@ public typealias Closure=()->Void
             }
             window!.addSubview(blurView!)
             window!.addSubview(animationView!)
+            
             blurView?.show(duration: showDuration, didEnd: {[unowned self] () -> Void in
                 self.spawn(views)
             })
@@ -89,6 +98,7 @@ public typealias Closure=()->Void
                     staticView.alpha = 1
                 }
                 self.didDissmissAllViews?()
+                self.visible = false
             }
         }
     }
