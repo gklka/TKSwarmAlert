@@ -248,7 +248,7 @@ class FallingAnimationView: UIView {
     // MARK: behaviors
     func collisionAll() {
         let collisionBehavior = UICollisionBehavior(items: animatedViews)
-        collisionBehavior.translatesReferenceBoundsIntoBoundary = true//❓
+        collisionBehavior.translatesReferenceBoundsIntoBoundary = false//❓
         self.animator.addBehavior(collisionBehavior)
     }
     
@@ -274,13 +274,13 @@ class FallingAnimationView: UIView {
                 else {
                     for v in views {
                         if v.superview != nil {
-                            if v.frame.top >= (v.superview!.bounds.bottom - self!.fieldMargin) {
+                            if v.frame.top >= (v.superview!.bounds.bottom - self!.fieldMargin - 1) {
                                 v.removeFromSuperview()
                             }
-                            else if v.frame.right <= (v.superview!.bounds.left + self!.fieldMargin) {
+                            else if v.frame.right <= (v.superview!.bounds.left + self!.fieldMargin - 1) {
                                 v.removeFromSuperview()
                             }
-                            else if v.frame.left >= (v.superview!.bounds.right - self!.fieldMargin) {
+                            else if v.frame.left >= (v.superview!.bounds.right - self!.fieldMargin - 1) {
                                 v.removeFromSuperview()
                             }
                         }
